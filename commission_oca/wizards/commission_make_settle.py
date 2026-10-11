@@ -33,39 +33,38 @@ class CommissionMakeSettle(models.TransientModel):
     def _get_period_start(self, agent, date_to):
         if agent.settlement == "monthly":
             return date(month=date_to.month, year=date_to.year, day=1)
-        elif agent.settlement == "biweekly":
+        if agent.settlement == "biweekly":
             if date_to.day >= 16:
                 return date(month=date_to.month, year=date_to.year, day=16)
-            else:
-                return date(month=date_to.month, year=date_to.year, day=1)
-        elif agent.settlement == "quaterly":
+            return date(month=date_to.month, year=date_to.year, day=1)
+        if agent.settlement == "quaterly":
             # Get first month of the date quarter
             month = (date_to.month - 1) // 3 * 3 + 1
             return date(month=month, year=date_to.year, day=1)
-        elif agent.settlement == "semi":
+        if agent.settlement == "semi":
             if date_to.month > 6:
                 return date(month=7, year=date_to.year, day=1)
-            else:
-                return date(month=1, year=date_to.year, day=1)
-        elif agent.settlement == "annual":
             return date(month=1, year=date_to.year, day=1)
+        if agent.settlement == "annual":
+            return date(month=1, year=date_to.year, day=1)
+        return None
 
     def _get_next_period_date(self, agent, current_date):
         if agent.settlement == "monthly":
             return current_date + relativedelta(months=1)
-        elif agent.settlement == "biweekly":
+        if agent.settlement == "biweekly":
             if current_date.day == 1:
                 return current_date + relativedelta(days=15)
-            else:
-                return date(
-                    month=current_date.month, year=current_date.year, day=1
-                ) + relativedelta(months=1, days=-1)
-        elif agent.settlement == "quaterly":
+            return date(
+                month=current_date.month, year=current_date.year, day=1
+            ) + relativedelta(months=1, days=-1)
+        if agent.settlement == "quaterly":
             return current_date + relativedelta(months=3)
-        elif agent.settlement == "semi":
+        if agent.settlement == "semi":
             return current_date + relativedelta(months=6)
-        elif agent.settlement == "annual":
+        if agent.settlement == "annual":
             return current_date + relativedelta(years=1)
+        return None
 
     def _get_settlement(self, agent, company, currency, sett_from, sett_to):
         self.ensure_one()
@@ -170,3 +169,4 @@ class CommissionMakeSettle(models.TransientModel):
                 "res_model": "commission.settlement",
                 "domain": [["id", "in", settlement_ids]],
             }
+        return None

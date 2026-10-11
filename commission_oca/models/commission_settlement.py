@@ -3,6 +3,7 @@
 # Copyright 2014-2022 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import typing
 
 from odoo import api, fields, models
 
@@ -10,7 +11,7 @@ from odoo import api, fields, models
 class CommissionSettlement(models.Model):
     _name = "commission.settlement"
     _description = "Settlement"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit: typing.ClassVar[list[str]] = ["mail.thread", "mail.activity.mixin"]
 
     name = fields.Char()
     total = fields.Float(compute="_compute_total", readonly=True, store=True)
