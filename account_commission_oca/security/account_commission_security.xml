@@ -4,8 +4,8 @@
 <odoo>
     <data>
         <record
-            model="res.groups.privilege"
             id="res_groups_privilege_account_commission"
+            model="res.groups.privilege"
         >
             <field name="name">Account Commissions</field>
             <field name="category_id" ref="base.module_category_hidden" />
