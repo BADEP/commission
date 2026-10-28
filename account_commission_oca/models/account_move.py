@@ -3,8 +3,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-from typing import ClassVar
-
 from odoo import api, exceptions, fields, models
 from odoo.fields import Command, Domain
 
@@ -98,7 +96,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit: ClassVar[list[str]] = [
+    _inherit = [  # noqa: RUF012
         "account.move.line",
         "commission.mixin",
     ]
