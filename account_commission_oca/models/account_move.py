@@ -96,7 +96,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = [
+    _inherit = [  # noqa: RUF012
         "account.move.line",
         "commission.mixin",
     ]

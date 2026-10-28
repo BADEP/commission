@@ -85,3 +85,4 @@ class CommissionMakeInvoice(models.TransientModel):
                 "res_model": "account.move",
                 "domain": [["id", "in", invoices.ids]],
             }
+        return None
