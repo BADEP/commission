@@ -20,7 +20,7 @@ class CommissionMixin(models.AbstractModel):
         store=True,
         copy=True,
     )
-    product_id = fields.Many2one(comodel_name="product.product", string="Product")
+    product_id = fields.Many2one(comodel_name="product.product")
     commission_free = fields.Boolean(
         string="Comm. free",
         compute="_compute_commission_free",
@@ -154,8 +154,9 @@ class CommissionLineMixin(models.AbstractModel):
             subtotal = max([0, subtotal - product.standard_price * quantity])
         if commission.commission_type == "fixed":
             return subtotal * (commission.fix_qty / 100.0)
-        elif commission.commission_type == "section":
+        if commission.commission_type == "section":
             return commission.calculate_section(subtotal)
+        return None
 
     @api.depends("agent_id")
     def _compute_commission_id(self):
